@@ -1,0 +1,9 @@
+{
+    "marfeelizableWords":[
+        {
+            "tag": "TITLE",
+            "ors":["news","noticias","notícias"],
+            "ands":[]
+        }  
+    ]
+}
