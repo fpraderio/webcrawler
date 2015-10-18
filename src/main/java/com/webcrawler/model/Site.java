@@ -1,20 +1,24 @@
-package com.webcrawler.domain.sites;
+package com.webcrawler.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 
+@Entity
+@Table(name="sites")
 public class Site {
-    private int id;
+    
+    @Id
     private String url;
     private int rank;
     private boolean isMarfeelizable;
     private String checkedDate;
 
-    public Site(){
-        url = "";
-        rank = 0;
-        isMarfeelizable = false;
+    protected Site(){
     }
+    
     public Site(String url, int rank, boolean isMarfeelizable, String checkedDate){
         this.url = url;
         this.rank = rank;
@@ -23,14 +27,16 @@ public class Site {
     }
    
 
+    @Override
+    public String toString() {
+     return "Site: "+getUrl();
+    }
+    
     @JsonIgnore
-    public int getId() {
-        return id;
+    public boolean isEmpty() {
+        return (this.getUrl() == null);
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getUrl() {
         return url;
@@ -47,11 +53,6 @@ public class Site {
     public void setRank(int rank) {
         this.rank = rank;
     }
- 
-    @Override
-    public String toString() {
-     return "Site: "+getUrl();
-    }
 
     public boolean isIsMarfeelizable() {
         return isMarfeelizable;
@@ -67,10 +68,5 @@ public class Site {
 
     public void setCheckedDate(String checkedDate) {
         this.checkedDate = checkedDate;
-    }
-    
-    @JsonIgnore
-    public boolean isEmpty() {
-        return (this.id == 0 || this.url == null);
     }
 }

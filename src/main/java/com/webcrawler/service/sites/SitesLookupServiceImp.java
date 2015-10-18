@@ -1,7 +1,7 @@
 package com.webcrawler.service.sites;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.webcrawler.domain.sites.Site;
+import com.webcrawler.model.Site;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;

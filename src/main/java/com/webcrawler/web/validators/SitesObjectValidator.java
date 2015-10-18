@@ -1,6 +1,6 @@
 package com.webcrawler.web.validators;
 
-import com.webcrawler.domain.sites.Site;
+import com.webcrawler.model.Site;
 import java.util.List;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

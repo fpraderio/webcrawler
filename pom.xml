@@ -9,7 +9,10 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
-            <spring.version>4.0.0.RELEASE</spring.version>
+            <spring.version>4.2.2.RELEASE</spring.version>
+            <jackson.version>2.6.3</jackson.version>
+	 <maven.compiler.source>1.8</maven.compiler.source>
+	 <maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
 	<dependencies>
@@ -31,30 +34,53 @@
                     <version>${spring.version}</version>
             </dependency>
             
-            <!-- jackson -->
+            <!-- persistence -->
             <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-core</artifactId>
-                <version>2.0.0</version>
-            </dependency>  
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-annotations</artifactId>
-                <version>2.0.0</version>
+                <groupId>javax.persistence</groupId>
+                <artifactId>persistence-api</artifactId>
+                <version>1.0.2</version>
             </dependency>
             <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-databind</artifactId>
-                <version>2.0.0</version>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-jpa</artifactId>
+                <version>1.9.0.RELEASE</version>
             </dependency>
-            
-            <!-- mysql connector-->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>5.0.2.Final</version>
+            </dependency>
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>5.1.36</version>
             </dependency>
+            <dependency>
+                <groupId>com.jolbox</groupId>
+                <artifactId>bonecp</artifactId>
+                <version>0.8.0.RELEASE</version>
+            </dependency>
+
+
+
             
+            <!-- jackson -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>  
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+                        
             <!-- jsoup -->
             <dependency>
                 <groupId>org.jsoup</groupId>
@@ -73,9 +99,6 @@
                 <artifactId>hibernate-validator</artifactId>
                 <version>5.2.2.Final</version>
             </dependency>
-
-
-
                                     
             <!-- test -->
             <dependency>

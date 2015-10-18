@@ -1,6 +1,6 @@
 package com.webcrawler.service.sites;
 
-import com.webcrawler.domain.sites.Site;
+import com.webcrawler.model.Site;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;

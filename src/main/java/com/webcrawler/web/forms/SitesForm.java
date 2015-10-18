@@ -1,6 +1,6 @@
 package com.webcrawler.web.forms;
 
-import com.webcrawler.domain.sites.Site;
+import com.webcrawler.model.Site;
 import com.webcrawler.web.validators.SitesObject;
 import java.util.List;
 
