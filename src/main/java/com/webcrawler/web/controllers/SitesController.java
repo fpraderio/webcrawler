@@ -1,8 +1,7 @@
 package com.webcrawler.web.controllers;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
-import com.webcrawler.web.forms.SitesForm;
 import com.webcrawler.domain.dao.SiteServiceDAO;
+import com.webcrawler.web.forms.SitesForm;
 import com.webcrawler.domain.sites.Site;
 import com.webcrawler.service.sites.SitesLookupServiceImp;
 import com.webcrawler.web.forms.SitesFilterForm;
@@ -11,7 +10,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,12 +19,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@EnableAsync
 @RequestMapping("/sites")
 public class SitesController {
         
-        
-        SiteServiceDAO siteServiceDAO = new SiteServiceDAO();
+        @Autowired
+        SiteServiceDAO siteServiceDAO;
         
         @Autowired
         SitesLookupServiceImp sitesLookupService;
@@ -50,16 +47,19 @@ public class SitesController {
 	@RequestMapping(value="", method = RequestMethod.GET)
         @ResponseStatus(HttpStatus.OK)
 	public List<Site> getSites( @ModelAttribute SitesFilterForm form) {
-            List<Site> sites = new VirtualFlow.ArrayLinkedList<Site>();
+            List<Site> sites;
             
-            if ("marfeelizable".equals(form.getFilter())){
-                sites = siteServiceDAO.getSiteByIsMarfeelizable(true);
-            }else if("nomarfeelizable".equals(form.getFilter())){
-                sites = siteServiceDAO.getSiteByIsMarfeelizable(false);
-            }else{
-                sites = siteServiceDAO.getAllSites();
+            switch (form.getFilter()){
+                case "marfeelizable":
+                    sites = siteServiceDAO.getSiteByIsMarfeelizable(true);
+                    break;
+                case "nomarfeelizable":
+                    sites = siteServiceDAO.getSiteByIsMarfeelizable(false);
+                    break;
+                default:
+                    sites = siteServiceDAO.getAllSites();
             }
-            
+                        
             return sites;
 
 	}
