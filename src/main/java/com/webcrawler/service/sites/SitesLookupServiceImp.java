@@ -55,9 +55,8 @@ public class SitesLookupServiceImp implements SitesLookupService{
         Marfeelizablewords marfeelizablewords;
         String fileName = "site/marfeelizableWords.json";
         try {
-            PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-            resolver.getResources("classpath*:"+fileName);
-            File file = new File(resolver.toString());
+            ClassLoader classLoader = getClass().getClassLoader();
+            File file = new File(classLoader.getResource(fileName).getFile());
             marfeelizablewords = mapper.readValue(file, Marfeelizablewords.class);
         } catch (IOException ex) {
             marfeelizablewords = new Marfeelizablewords();
