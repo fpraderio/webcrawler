@@ -14,6 +14,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import org.junit.After;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -34,9 +35,6 @@ public class SitesControllerTest {
 
     private MockMvc mockMvc;
     
-    private Site site;
-    
-    
     @Autowired
     private WebApplicationContext webApplicationContext;
     
@@ -50,13 +48,20 @@ public class SitesControllerTest {
         mockMvc = webAppContextSetup(webApplicationContext).build();
         siteRepository.deleteAllInBatch();
         siteRepository.deleteAll();
-        site = new Site("centrallecheraasturiana.es", 834987, false, "2015-10-15 13:57:09.0");
-        siteRepository.save(site);
+    }
+    
+    @After
+    public void tearDown() {
+        
+        cleanDB();
     }
     
 
    @Test
     public void readSites() throws Exception {
+        
+        Site site = new Site("centrallecheraasturiana.es", 834987, false, "2015-10-15 13:57:09.0");
+        siteRepository.save(site);
         
         mockMvc.perform(get("/sites"))
                 .andExpect(status().isOk())
@@ -66,6 +71,8 @@ public class SitesControllerTest {
                 .andExpect(jsonPath("$[0].rank", is(site.getRank())))
                 .andExpect(jsonPath("$[0].checkedDate", is(site.getCheckedDate())))
                 .andExpect(jsonPath("$[0].isMarfeelizable", is(site.isIsMarfeelizable())));
+        
+        cleanDB();
     }
     
    @Test
@@ -91,6 +98,8 @@ public class SitesControllerTest {
                 .contentType(contentType)
                 .content(sitesJson))
                 .andExpect(status().isCreated());
+        
+        cleanDB();
     }
     
     @Test
@@ -107,7 +116,15 @@ public class SitesControllerTest {
         mockMvc.perform(post("/sites")
                 .contentType(contentType)
                 .content(sitesJson))
-                .andExpect(status().isCreated());        
+                .andExpect(status().isCreated());
+        
+        mockMvc.perform(get("/sites"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].isMarfeelizable", is(true)));
+        
+        cleanDB();
     }
     
     @Test
@@ -125,7 +142,19 @@ public class SitesControllerTest {
                 .contentType(contentType)
                 .content(sitesJson))
                 .andExpect(status().isCreated());
+        
+        mockMvc.perform(get("/sites"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].isMarfeelizable", is(false)));
+        
+        cleanDB();
     }
      
+    private void cleanDB(){
+        siteRepository.deleteAllInBatch();
+        siteRepository.deleteAll();
+    }
     
 }
