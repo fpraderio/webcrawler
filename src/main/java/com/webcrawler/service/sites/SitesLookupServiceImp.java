@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
@@ -52,10 +53,11 @@ public class SitesLookupServiceImp implements SitesLookupService{
 
         ObjectMapper mapper = new ObjectMapper();
         Marfeelizablewords marfeelizablewords;
-        String fileName = "/site/marfeelizableWords.json";
+        String fileName = "site/marfeelizableWords.json";
         try {
-            ClassLoader classLoader = getClass().getClassLoader();
-            File file = new File(classLoader.getResource(fileName).getFile());
+            PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+            resolver.getResources("classpath*:"+fileName);
+            File file = new File(resolver.toString());
             marfeelizablewords = mapper.readValue(file, Marfeelizablewords.class);
         } catch (IOException ex) {
             marfeelizablewords = new Marfeelizablewords();
